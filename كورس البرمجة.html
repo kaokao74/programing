@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة المتصدرين — كورس البرمجة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#FFD700;--silver:#C0C0C0;--bronze:#CD7F32;
+  --bg:#0a0a14;--bg2:#11112a;--card:#16163a;--card2:#1e1e4a;
+  --accent:#7B5FFF;--accent2:#A78BFA;
+  --text:#f0eeff;--muted:#8885aa;
+  --green:#22d3a0;--red:#ff6b6b;--amber:#fbbf24;--blue:#60a5fa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;direction:rtl;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%,rgba(255,255,255,.55) 0%,transparent 100%),
+    radial-gradient(1px 1px at 30% 40%,rgba(255,255,255,.35) 0%,transparent 100%),
+    radial-gradient(1px 1px at 55% 20%,rgba(255,255,255,.45) 0%,transparent 100%),
+    radial-gradient(1px 1px at 70% 60%,rgba(255,255,255,.3)  0%,transparent 100%),
+    radial-gradient(2px 2px at 85% 10%,rgba(255,255,255,.5)  0%,transparent 100%),
+    radial-gradient(1px 1px at 20% 75%,rgba(255,255,255,.4)  0%,transparent 100%),
+    radial-gradient(2px 2px at 90% 80%,rgba(255,255,255,.45) 0%,transparent 100%),
+    radial-gradient(1px 1px at 45% 90%,rgba(255,255,255,.3)  0%,transparent 100%),
+    radial-gradient(1px 1px at 60%  5%,rgba(255,255,255,.4)  0%,transparent 100%),
+    radial-gradient(1px 1px at  5% 50%,rgba(255,255,255,.35) 0%,transparent 100%);}
+.page{position:relative;z-index:1;max-width:740px;margin:0 auto;padding:2rem 1.2rem 4rem;}
+
+/* ── Header ── */
+.site-header{text-align:center;margin-bottom:2rem;animation:fadeDown .7s ease both;}
+.badge-top{display:inline-block;background:linear-gradient(135deg,var(--accent),#5B21B6);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:5px 16px;border-radius:100px;margin-bottom:10px;}
+.site-header h1{font-size:clamp(22px,5vw,34px);font-weight:900;background:linear-gradient(135deg,#fff 30%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px;}
+.site-header p{color:var(--muted);font-size:13px;}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;margin-left:4px;}
+
+/* ── Session tabs ── */
+.tabs-wrap{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;animation:fadeUp .6s ease .05s both;}
+.tab{padding:7px 18px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid rgba(123,95,255,.25);background:var(--card);color:var(--muted);transition:all .2s;}
+.tab:hover{border-color:rgba(123,95,255,.5);color:var(--text);}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 14px rgba(123,95,255,.4);}
+
+/* ── Podium ── */
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:14px;margin-bottom:2.5rem;animation:fadeUp .8s ease .1s both;}
+.podium-slot{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;}
+.podium-slot:hover .p-avatar{transform:scale(1.08);}
+.medal{font-size:22px;}
+.p-avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;border:3px solid transparent;transition:transform .2s;}
+.rank1 .p-avatar{width:72px;height:72px;font-size:18px;background:linear-gradient(135deg,#FFF7E0,#FFE066);color:#7A4F00;border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,.5);}
+.rank2 .p-avatar{width:58px;height:58px;font-size:15px;background:linear-gradient(135deg,#E8E8F0,#C8C8D8);color:#444;border-color:var(--silver);box-shadow:0 0 12px rgba(192,192,192,.3);}
+.rank3 .p-avatar{width:52px;height:52px;font-size:13px;background:linear-gradient(135deg,#FFE4CA,#CD7F32);color:#4a2200;border-color:var(--bronze);box-shadow:0 0 12px rgba(205,127,50,.35);}
+.p-name{font-size:11px;font-weight:700;text-align:center;max-width:88px;line-height:1.3;}
+.p-base{border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;width:96px;padding:10px 8px;}
+.rank1 .p-base{background:linear-gradient(180deg,#2a2250,#1a1540);border:1px solid rgba(255,215,0,.3);min-height:90px;}
+.rank2 .p-base{background:linear-gradient(180deg,#1e1e40,#141430);border:1px solid rgba(192,192,192,.2);min-height:66px;}
+.rank3 .p-base{background:linear-gradient(180deg,#1a1830,#11102a);border:1px solid rgba(205,127,50,.2);min-height:50px;}
+.p-pts{font-size:20px;font-weight:900;}
+.rank1 .p-pts{color:var(--gold);text-shadow:0 0 10px rgba(255,215,0,.5);}
+.rank2 .p-pts{color:var(--silver);}
+.rank3 .p-pts{color:var(--bronze);}
+.p-label{font-size:10px;color:var(--muted);}
+.p-badges{display:flex;gap:3px;flex-wrap:wrap;justify-content:center;margin-top:2px;}
+
+/* ── List ── */
+.section-title{font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:block;height:1px;width:28px;background:var(--muted);opacity:.4;}
+.list{display:flex;flex-direction:column;gap:7px;}
+.row{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--card);border:1px solid rgba(123,95,255,.1);border-radius:12px;cursor:pointer;transition:background .2s,transform .2s,border-color .2s;animation:fadeUp .5s ease both;}
+.row:hover{background:var(--card2);transform:translateX(-3px);border-color:rgba(123,95,255,.35);}
+.row-rank{font-size:12px;font-weight:700;color:var(--muted);min-width:22px;text-align:center;}
+.mini-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;border:2px solid rgba(255,255,255,.08);}
+.row-name{flex:1;font-size:14px;font-weight:500;}
+.row-badges{display:flex;gap:3px;}
+.bdg{font-size:14px;line-height:1;}
+.lvl{font-size:10px;padding:2px 7px;border-radius:100px;font-weight:700;white-space:nowrap;}
+.lvl-s{background:rgba(255,215,0,.15);color:var(--gold);}
+.lvl-h{background:rgba(123,95,255,.15);color:var(--accent2);}
+.lvl-m{background:rgba(34,211,160,.12);color:var(--green);}
+.lvl-0{background:rgba(136,133,170,.1);color:var(--muted);}
+.bar-wrap{width:56px;height:5px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
+.bar{height:100%;border-radius:10px;transition:width 1s ease;}
+.row-pts{font-size:14px;font-weight:900;min-width:44px;text-align:left;direction:ltr;}
+
+/* ── Modal ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid rgba(123,95,255,.3);border-radius:20px;padding:1.8rem;width:100%;max-width:420px;position:relative;animation:slideUp .3s ease;margin:auto;}
+.modal-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.08);border:none;color:var(--text);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.modal-close:hover{background:rgba(255,255,255,.18);}
+.modal-header{display:flex;align-items:center;gap:14px;margin-bottom:1.2rem;}
+.modal-avatar{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;}
+.modal-title h2{font-size:16px;font-weight:800;margin-bottom:4px;}
+.modal-title .m-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;}
+.total-pts{text-align:center;padding:.9rem;background:rgba(123,95,255,.1);border:1px solid rgba(123,95,255,.25);border-radius:14px;margin-bottom:1.1rem;}
+.total-pts .big{font-size:42px;font-weight:900;line-height:1;}
+.total-pts .lbl{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* session history inside modal */
+.m-sessions{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem;}
+.m-session-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 14px;}
+.m-session-title{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;}
+.m-sess-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+.d-card{background:var(--bg2);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:10px 6px;text-align:center;}
+.d-card .d-icon{font-size:18px;margin-bottom:4px;}
+.d-card .d-val{font-size:17px;font-weight:900;margin-bottom:1px;}
+.d-card .d-sub{font-size:11px;color:var(--muted);margin-bottom:1px;}
+.d-card .d-lbl{font-size:10px;color:var(--muted);}
+
+/* badges section */
+.badge-section{margin-top:.2rem;}
+.badge-section h3{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:1px;}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:7px;}
+.badge-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px;}
+.badge-card.earned{border-color:rgba(255,215,0,.25);background:rgba(255,215,0,.05);}
+.badge-card.locked{opacity:.4;filter:grayscale(.7);}
+.badge-card .b-icon{font-size:22px;flex-shrink:0;}
+.badge-card .b-name{font-size:11px;font-weight:700;line-height:1.3;}
+.badge-card .b-desc{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+.footer{text-align:center;margin-top:3rem;color:var(--muted);font-size:11px;opacity:.45;}
+@media(max-width:480px){.p-base{width:80px;}.bar-wrap{width:36px;}.row-name{font-size:12px;}.badges-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="badge-top">🎮 كورس البرمجة — أولى ثانوي</div>
+    <h1>لوحة المتصدرين</h1>
+    <p>اضغط على اسمك وشوف تفاصيلك وشاراتك <span class="live-dot"></span></p>
+  </header>
+  <div class="tabs-wrap" id="tabs"></div>
+  <div class="podium" id="podium"></div>
+  <div class="section-title">الترتيب</div>
+  <div class="list" id="list"></div>
+  <div class="footer">كورس البرمجة 2026 · اضغط على أي اسم لتفاصيله</div>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-header">
+      <div class="modal-avatar" id="mAvatar"></div>
+      <div class="modal-title">
+        <h2 id="mName"></h2>
+        <div id="mLvl"></div>
+
+      </div>
+    </div>
+    <div class="total-pts">
+      <div class="big" id="mTotal"></div>
+      <div class="lbl">إجمالي النقاط</div>
+    </div>
+    <div class="m-sessions" id="mSessions"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  DATA  —  أضف محاضرات جديدة هنا بسهولة
+// ══════════════════════════════════════════════════════
+const SESSIONS = [
+  {
+    id: 1,
+    label: "محاضرة 1",
+    students: [
+      {name:"كيرلس عماد عبدالمسيح",  hw:null, att:false, inter:false},
+      {name:"چورچينا ابراهيم جرجس",  hw:null, att:true,  inter:false},
+      {name:"مريم عماد كمال",         hw:10,   att:true,  inter:true},
+      {name:"ايريني إيميل جميل",      hw:10,   att:true,  inter:true},
+      {name:"مينا ناجى مكس",          hw:9,    att:true,  inter:true},
+      {name:"ابانوب طارق حنا",        hw:8,    att:true,  inter:true},
+      {name:"يوسف تامر رياض",         hw:9,    att:true,  inter:false},
+      {name:"فادي ايمن عادل",         hw:null, att:true,  inter:false},
+      {name:"ابانوب ناجي رياض",       hw:9,    att:true,  inter:true},
+      {name:"مريم صبحي برسوم",        hw:null, att:true,  inter:true},
+      {name:"كارول ماهر مجدي",        hw:8,    att:false, inter:false},
+      {name:"انجي بدوي زكي",          hw:10,   att:true,  inter:false},
+      {name:"مينا مجدي عطا",          hw:9,    att:true,  inter:false},
+      {name:"كيرلس اديب عزيز",        hw:null, att:true,  inter:false},
+      {name:"اندريا قلادة قلادة",     hw:9,    att:true,  inter:true},
+      {name:"دميانه توفيق رزق",       hw:null, att:false, inter:false},
+      {name:"مريم استيفن مجدي",       hw:9,    att:true,  inter:true},
+      {name:"إيريني رزق سامي",        hw:9,    att:true,  inter:true},
+      {name:"مريم سمير حزين",         hw:null, att:false, inter:false},
+      {name:"بولا هاني يوسف",         hw:null, att:false, inter:false},
+      {name:"نرمين نصري حزبن",        hw:null, att:false, inter:false},
+      {name:"نسيم ناجي",              hw:null, att:true,  inter:true},
+      {name:"ريموندا صبري",           hw:9,    att:true,  inter:true},
+    ]
+  }
+  // ← لما تيجي محاضرة 2 أضفها هنا بنفس الشكل:
+  // ,{ id:2, label:"محاضرة 2", students:[...] }
+];
+
+// ══════════════════════════════════════════════════════
+//  BADGE DEFINITIONS
+// ══════════════════════════════════════════════════════
+const BADGE_DEFS = [
+  { id:"perfect_hw",   icon:"📖", name:"واجب كامل",      desc:"10/10 في الواجب",          check: (stats)=> stats.some(s=>s.hw===10) },
+  { id:"all_attend",   icon:"📅", name:"حضور مثالي",     desc:"حضر كل المحاضرات",         check: (stats,total)=> stats.filter(s=>s.att).length === total },
+  { id:"interactive",  icon:"⚡", name:"الأكتر تفاعلاً", desc:"تفاعل في كل المحاضرات",    check: (stats,total)=> stats.filter(s=>s.inter).length === total },
+  { id:"hw_streak",    icon:"🔥", name:"سلسلة واجبات",   desc:"سلَّم الواجب 2 مرات متتالية", check: (stats)=>{ let c=0,best=0; stats.forEach(s=>{c=s.hw!==null?c+1:0;best=Math.max(best,c);}); return best>=2; } },
+  { id:"top3",         icon:"🏆", name:"من الأفضل",       desc:"دخل أعلى 3 مرة واحدة على الأقل", check:()=>false, special:true },
+  { id:"first_pts",    icon:"✨", name:"أول نقطة",        desc:"حصل على نقطته الأولى",     check: (stats)=> stats.some(s=>s.att||s.inter||s.hw!==null) },
+  { id:"attend_inter", icon:"🌟", name:"حضور + تفاعل",   desc:"حضر وتفاعل في نفس المحاضرة", check: (stats)=> stats.some(s=>s.att&&s.inter) },
+  { id:"full_session", icon:"💎", name:"جلسة مثالية",    desc:"حضور + تفاعل + واجب كامل في محاضرة واحدة", check: (stats)=> stats.some(s=>s.att&&s.inter&&s.hw===10) },
+];
+
+// ══════════════════════════════════════════════════════
+//  SCORING
+// ══════════════════════════════════════════════════════
+function hwPts(hw){ return hw!==null ? Math.round((hw/10)*3) : 0; }
+function sessPts(s){ return hwPts(s.hw)+(s.att?1:0)+(s.inter?2:0); }
+
+// Build per-student aggregate across all sessions
+const ALL_NAMES = [...new Set(SESSIONS.flatMap(ses=>ses.students.map(s=>s.name)))];
+
+function buildStudents(sessionIds){
+  const filtered = SESSIONS.filter(ses=>sessionIds.includes(ses.id));
+  return ALL_NAMES.map(name=>{
+    const records = filtered.map(ses=>{
+      const found = ses.students.find(s=>s.name===name);
+      return found ? {...found, sessId:ses.id} : {name,hw:null,att:false,inter:false,sessId:ses.id};
+    });
+    const total = records.reduce((sum,r)=>sum+sessPts(r),0);
+    return {name, records, total};
+  }).sort((a,b)=>b.total-a.total);
+}
+
+function getBadges(records, allSessions, studentName, rankedList){
+  const earned=[];
+  BADGE_DEFS.forEach(def=>{
+    if(def.special){
+      if(def.id==="top3"){
+        const idx = rankedList.findIndex(s=>s.name===studentName);
+        if(idx<3 && rankedList[idx].total>0) earned.push(def.id);
+      }
+      return;
+    }
+    if(def.check(records, allSessions.length)) earned.push(def.id);
+  });
+  return earned;
+}
+
+// ══════════════════════════════════════════════════════
+//  UI HELPERS
+// ══════════════════════════════════════════════════════
+const AC=[
+  ["#2d1b69","#a78bfa"],["#064e3b","#34d399"],["#7c2d12","#fb923c"],
+  ["#1e3a5f","#60a5fa"],["#3b1460","#e879f9"],["#14532d","#86efac"],
+  ["#78350f","#fcd34d"],["#450a0a","#fca5a5"],["#1a1a4e","#818cf8"],
+];
+function ini(n){const p=n.trim().split(" ");return(p[0][0]+(p[1]?p[1][0]:"")).toUpperCase();}
+function lvlInfo(p){
+  if(p>=6)  return{cls:"lvl-s",txt:"⭐ خبير"};
+  if(p>=4)  return{cls:"lvl-h",txt:"⚡ متقدم"};
+  if(p>=1)  return{cls:"lvl-m",txt:"✦ مبتدئ"};
+  return{cls:"lvl-0",txt:"— جديد"};
+}
+
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+let activeSession = "all";
+
+function activeIds(){
+  if(activeSession==="all") return SESSIONS.map(s=>s.id);
+  return [parseInt(activeSession)];
+}
+
+// ══════════════════════════════════════════════════════
+//  RENDER TABS
+// ══════════════════════════════════════════════════════
+function renderTabs(){
+  const el=document.getElementById("tabs");
+  el.innerHTML="";
+  const all=document.createElement("div");
+  all.className="tab"+(activeSession==="all"?" active":"");
+  all.textContent="الكل";
+  all.onclick=()=>{activeSession="all";render();};
+  el.appendChild(all);
+  SESSIONS.forEach(ses=>{
+    const t=document.createElement("div");
+    t.className="tab"+(activeSession==ses.id?" active":"");
+    t.textContent=ses.label;
+    t.onclick=()=>{activeSession=ses.id;render();};
+    el.appendChild(t);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  RENDER LEADERBOARD
+// ══════════════════════════════════════════════════════
+function render(){
+  renderTabs();
+  const students = buildStudents(activeIds());
+  const maxPts = Math.max(...students.map(s=>s.total),1);
+
+  // Podium
+  const top3=students.slice(0,3), rest=students.slice(3);
+  const pOrder=[1,0,2], pClasses=["rank2","rank1","rank3"], medals=["🥈","🥇","🥉"];
+  const podBG=["linear-gradient(135deg,#E8E8F0,#C8C8D8)","linear-gradient(135deg,#FFF7E0,#FFE066)","linear-gradient(135deg,#FFE4CA,#CD7F32)"];
+  const podEl=document.getElementById("podium");
+  podEl.innerHTML="";
+
+  pOrder.forEach((si,pi)=>{
+    const s=top3[si]; if(!s)return;
+    const slot=document.createElement("div");
+    slot.className=`podium-slot ${pClasses[pi]}`;
+    slot.onclick=()=>openModal(students.indexOf(s),students);
+    slot.innerHTML=`<div class="medal">${medals[pi]}</div>
+    <div class="p-avatar" style="background:${podBG[pi]}">${ini(s.name)}</div>
+    <div class="p-name">${s.name.split(" ").slice(0,2).join(" ")}</div>
+    <div class="p-base">
+      <div class="p-pts">${s.total}</div>
+      <div class="p-label">نقطة</div>
+    </div>`;
+    podEl.appendChild(slot);
+  });
+
+  // List
+  const listEl=document.getElementById("list");
+  listEl.innerHTML="";
+  rest.forEach((s,i)=>{
+    const rank=i+4,ci=(i+3)%AC.length,[bg,fg]=AC[ci];
+    const bar=Math.round((s.total/maxPts)*100);
+    const lv=lvlInfo(s.total);
+    const row=document.createElement("div");
+    row.className="row"; row.style.animationDelay=(i*.04)+"s";
+    row.onclick=()=>openModal(students.indexOf(s),students);
+    row.innerHTML=`<span class="row-rank">${rank}</span>
+    <div class="mini-av" style="background:${bg};color:${fg}">${ini(s.name)}</div>
+    <span class="row-name">${s.name}</span>
+    <span class="lvl ${lv.cls}">${lv.txt}</span>
+    <div class="bar-wrap"><div class="bar" style="width:0%;background:${fg}" data-p="${bar}"></div></div>
+    <span class="row-pts" style="color:${fg}">${s.total} pts</span>`;
+    listEl.appendChild(row);
+  });
+
+  setTimeout(()=>document.querySelectorAll(".bar").forEach(b=>b.style.width=b.dataset.p+"%"),300);
+}
+
+// ══════════════════════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════════════════════
+function openModal(idx, students){
+  const s=students[idx], ci=idx%AC.length, [bg,fg]=AC[ci];
+  const lv=lvlInfo(s.total);
+  const activeSessions=activeIds().map(id=>SESSIONS.find(ses=>ses.id===id));
+
+  document.getElementById("mAvatar").style.cssText=`background:${bg};color:${fg}`;
+  document.getElementById("mAvatar").textContent=ini(s.name);
+  document.getElementById("mName").textContent=s.name;
+  document.getElementById("mLvl").innerHTML=`<span class="lvl ${lv.cls}">${lv.txt}</span>`;
+  document.getElementById("mTotal").textContent=s.total;
+  document.getElementById("mTotal").style.color=fg;
+
+  // session breakdown
+  const sessEl=document.getElementById("mSessions");
+  sessEl.innerHTML="";
+  s.records.forEach(r=>{
+    const ses=SESSIONS.find(ses=>ses.id===r.sessId);
+    if(!ses) return;
+    const hp=hwPts(r.hw), ap=r.att?1:0, ip=r.inter?2:0;
+    const card=document.createElement("div");
+    card.className="m-session-card";
+    card.innerHTML=`<div class="m-session-title">${ses.label} &nbsp;·&nbsp; <span style="color:${fg};font-weight:800">${hp+ap+ip} نقطة</span></div>
+    <div class="m-sess-grid">
+      <div class="d-card">
+        <div class="d-icon">${r.att?"✅":"❌"}</div>
+        <div class="d-val" style="color:${r.att?"var(--green)":"var(--red)"}">+${ap}</div>
+        <div class="d-sub">${r.att?"حاضر":"غائب"}</div>
+        <div class="d-lbl">الحضور</div>
+      </div>
+      <div class="d-card">
+        <div class="d-icon">${r.inter?"⚡":"💤"}</div>
+        <div class="d-val" style="color:${r.inter?"var(--amber)":"var(--muted)"}">+${ip}</div>
+        <div class="d-sub">${r.inter?"متفاعل":"—"}</div>
+        <div class="d-lbl">التفاعل</div>
+      </div>
+      <div class="d-card">
+        <div class="d-icon">${r.hw!==null?"📝":"📭"}</div>
+        <div class="d-val" style="color:${r.hw!==null?fg:"var(--muted)"}">+${hp}</div>
+        <div class="d-sub">${r.hw!==null?r.hw+"/10":"لم يُسلَّم"}</div>
+        <div class="d-lbl">الواجب</div>
+      </div>
+    </div>`;
+    sessEl.appendChild(card);
+  });
+
+  document.getElementById("modalBg").classList.add("open");
+}
+
+document.getElementById("modalClose").onclick=()=>document.getElementById("modalBg").classList.remove("open");
+document.getElementById("modalBg").onclick=e=>{if(e.target===document.getElementById("modalBg"))document.getElementById("modalBg").classList.remove("open");};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("modalBg").classList.remove("open");});
+
+// ── INIT ──
+render();
+</script>
+</body>
+</html>
